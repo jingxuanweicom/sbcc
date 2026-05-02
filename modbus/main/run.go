@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"modbus/db"
 	"modbus/home"
+	"modbus/sql"
+	"modbus/sqlx"
 	"modbus/sub"
 	"modbus/web"
 )
@@ -19,7 +20,8 @@ func main() {
 	web.Run()
 
 	// 数据库模块启动
-	db.Run()
+	sql.Run()
+	sqlx.Run()
 
 	// 功能模块启动
 	home.Run()

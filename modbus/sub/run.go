@@ -28,9 +28,9 @@ func Run() {
 }
 
 func sub(w http.ResponseWriter, r *http.Request) {
-	const OriginalConfigPath = "data/conf/clash.yaml"
+	ConfigPath := "data/clash.yaml"
 
-	absPath, _ := filepath.Abs(OriginalConfigPath)
+	absPath, _ := filepath.Abs(ConfigPath)
 
 	info, err := os.Stat(absPath)
 	if err != nil || info.Size() == 0 {
