@@ -7,13 +7,14 @@ package sub
 
 import (
 	"fmt"
-	"github.com/go-chi/chi/v5"
 	"modbus/web"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/go-chi/chi/v5"
 )
 
 func Run() {
@@ -28,6 +29,15 @@ func Run() {
 }
 
 func sub(w http.ResponseWriter, r *http.Request) {
+
+	// // 获取?token参数
+	// token := r.URL.Query().Get("token")
+	// if token == "" {
+	// 	w.WriteHeader(http.StatusBadRequest)
+	// 	fmt.Fprintf(w, "错误：缺少token参数。")
+	// 	return
+	// }
+
 	ConfigPath := "data/clash.yaml"
 
 	absPath, _ := filepath.Abs(ConfigPath)

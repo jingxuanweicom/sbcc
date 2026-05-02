@@ -1,7 +1,5 @@
 package sqlx
 
-
-
 import (
 	"fmt"
 	"modbus/env"

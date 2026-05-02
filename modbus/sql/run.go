@@ -3,6 +3,7 @@ package sql
 import (
 	"database/sql"
 	"fmt"
+
 	"modbus/env"
 	"os"
 	"time"
@@ -81,7 +82,7 @@ func Run() {
 
 		fmt.Printf("🔄 [SQL] 数据库连接失败: %v。 9秒后尝试重连...\n", err)
 		time.Sleep(9 * time.Second)
-		// fmt.Printf("❌ [DB] 数据库 重连中...\n")
+		// log.Printf("❌ [SQL] 数据库 重连中...\n")
 	}
 
 	// 设置连接池（连上后再设置）

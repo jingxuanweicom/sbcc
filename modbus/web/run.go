@@ -5,9 +5,9 @@ package web
 
 import (
 	"fmt"
-	"log"
 	"modbus/env"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -47,7 +47,9 @@ func Run() {
 	select {
 	case err := <-errChan:
 		// 如果通道里有错，说明端口启动失败（如 Address already in use）
-		log.Fatalf("❌ [Web] 致命错误：端口可能被占用或权限不足 | %v", err)
+		fmt.Printf("❌ [Web] 致命错误：端口可能被占用或权限不足 | %v\n", err)
+		os.Exit(1)
+		return
 	case <-time.After(100 * time.Millisecond):
 		// 100ms 过去了没报错，说明端口占领成功
 		fmt.Printf("✅ [Web] %s端口占领成功，底座已就绪\n", env.Get("WEB_PORT"))

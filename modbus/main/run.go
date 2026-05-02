@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"modbus/grom"
 	"modbus/home"
 	"modbus/sql"
 	"modbus/sqlx"
@@ -22,6 +23,7 @@ func main() {
 	// 数据库模块启动
 	sql.Run()
 	sqlx.Run()
+	grom.Run()
 
 	// 功能模块启动
 	home.Run()
