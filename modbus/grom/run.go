@@ -46,7 +46,7 @@ func Run() {
 	})
 
 	if err != nil {
-		fmt.Printf("✅ [GORM] 绑定原生连接失败: %v\n", err)
+		fmt.Printf("❌ [GORM] 绑定原生连接失败: %v\n", err)
 	}
 
 	fmt.Printf("✅ [GORM] 已成功挂载到原生 %s 连接池\n", env.Get("DB_TYPE"))
