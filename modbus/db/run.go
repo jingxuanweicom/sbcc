@@ -14,13 +14,10 @@ var DB *sql.DB
 func Run() {
 	// 一次性初始化数据库配置
 	env.Init([][]string{
-		// { "KEY", "DEFAULT", "COMMENT..." }
-		{"DB_TYPE", "sqlite", "数据库驱动类型", "支持: sqlite (文件模式), pgsql/mysql (服务器模式)"},
-		{"DB_NAME", "trade_data.db", "数据库名", "若使用 sqlite，此处为文件名；若使用 pgsql/mysql，此处为数据库实例名"},
-
-		// 以下为网络数据库专用配置
-		{"DB_HOST", "127.0.0.1", "数据库地址", "仅针对 pgsql/mysql，sqlite 模式下会忽略此项"},
-		{"DB_PORT", "5432", "数据库端口", "pgsql 默认 5432, mysql 默认 3306, sqlite 忽略"},
+		{"DB_TYPE", "sqlite", "--- [数据库驱动配置] ---", "支持类型: sqlite (本地文件), pgsql/mysql (远程服务器)", "注意: 若选 sqlite，下方 DB_NAME 则为数据库文件名"},
+		{"DB_NAME", "data/sbcc.db", "--- [数据库实例/文件名] ---", "SQLite 示例: data/sbcc.db | PG/MySQL 示例: my_trade_db"},
+		{"DB_HOST", "127.0.0.1", "--- [网络配置] ---", "仅针对 pgsql/mysql，sqlite 模式下请忽略"},
+		{"DB_PORT", "5432", "默认端口: pgsql(5432), mysql(3306)"},
 		{"DB_USER", "postgres", "数据库用户名"},
 		{"DB_PASSWORD", "your_password", "数据库密码"},
 	})
