@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"modbus/db"
 	"modbus/home"
 	"modbus/sub"
 	"modbus/web"
-	"modbus/db"
 )
 
 func main() {

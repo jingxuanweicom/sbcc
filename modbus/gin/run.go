@@ -2,8 +2,8 @@ package gin
 
 import (
 	"fmt"
-	"net/http"
 	"modbus/web"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )

@@ -7,8 +7,8 @@ package home
 import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
-	"net/http"
 	"modbus/web"
+	"net/http"
 )
 
 func Run() {

@@ -19,17 +19,21 @@ func Run() {
 		fmt.Println("⚠️ [DB] 数据库模块 配置错误！")
 	}
 
+	// 间隔2s
+	time.Sleep(2 * time.Second)
+
 	// 开始无限循环重连
 	for {
+
 		err = DB.Ping()
 		if err == nil {
-			fmt.Println("✅ [DB] 数据库模块 连接成功！")
+			fmt.Printf("✅ [DB] 数据库 连接成功！\n")
 			break // 连上了，跳出循环
 		}
 
-		fmt.Printf("🔄 [DB] 数据库模块 连接失败: %v。 5秒后尝试重连...\n", err)
-		time.Sleep(5 * time.Second)
-		// fmt.Println("❌ [DB] 数据库模块 重连中...")
+		fmt.Printf("🔄 [DB] 数据库连接失败: %v。 9秒后尝试重连...\n", err)
+		time.Sleep(9 * time.Second)
+		// fmt.Printf("❌ [DB] 数据库 重连中...\n")
 	}
 
 	// 设置连接池（连上后再设置）
