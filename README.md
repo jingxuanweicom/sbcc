@@ -68,11 +68,9 @@ sbcc/
 ### 本地运行
 
 ```bash
-# 进入项目目录
-cd modbus
 
 # 启动应用
-go run main/run.go
+go run modbus/main/run.go
 ```
 
 启动后访问: http://localhost:9081
