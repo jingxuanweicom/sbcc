@@ -35,12 +35,21 @@ func Run() {
 
 func sub(w http.ResponseWriter, r *http.Request) {
 
-	// 判断 User-Agent 是否包含 "Clash"
-	if !strings.Contains(r.UserAgent(), "clash") {
-		// 直接返回标准的 404 响应，不要手动写 Header
-		http.NotFound(w, r)
-		return
-	}
+// 1. 获取原始 UA
+    rawUA := r.UserAgent()
+    
+    // 2. 转换为小写，确保 Clash, clash, CLASH 都能匹配
+    ua := strings.ToLower(rawUA)
+
+    // 3. 调试大法：直接在控制台看一眼到底传了什么
+    // fmt.Printf("【调试】当前请求 UA: %s\n", rawUA)
+
+    // 4. 核心逻辑：只要包含 "clash" 字符串就放行
+    if !strings.Contains(ua, "clash") {
+        // 如果不包含，返回 404
+        http.NotFound(w, r)
+        return
+    }
 
 	// 获取?token参数
 	token := r.URL.Query().Get("token")
