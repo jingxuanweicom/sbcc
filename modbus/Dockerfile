@@ -8,8 +8,8 @@ COPY go.work .
 COPY modbus/ ./modbus/
 
 # 设置 Go 代理
-ENV GOPROXY=https://proxy.golang.org,direct
-ENV GOSUMDB=off
+# ENV GOPROXY=https://proxy.golang.org,direct
+# ENV GOSUMDB=off
 
 # 进入 modbus 目录构建
 WORKDIR /app/modbus
