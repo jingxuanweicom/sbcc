@@ -7,11 +7,13 @@ package sub
 
 import (
 	"fmt"
+	"modbus/gorm"
 	"modbus/web"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -33,11 +35,24 @@ func Run() {
 
 func sub(w http.ResponseWriter, r *http.Request) {
 
+	// 判断 User-Agent 是否包含 "Clash"
+	if !strings.Contains(r.UserAgent(), "clash") {
+		// 直接返回标准的 404 响应，不要手动写 Header
+		http.NotFound(w, r)
+		return
+	}
+
 	// 获取?token参数
 	token := r.URL.Query().Get("token")
-	if token == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "")
+
+	// 对比数据库是否存在该token
+	// 从数据库查询token是否存在
+	var sub Sub
+
+	err := gorm.Gorm.Where("token = ?", token).First(&sub).Error
+	if err != nil {
+		// 返回404错误页面
+		http.NotFound(w, r)
 		return
 	}
 
@@ -53,7 +68,7 @@ func sub(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 配置文件显示名称
-	filename := "SB控制中心"
+	filename := "SBCC"
 	// 更新间隔（单位: 小时）
 	update := "1"
 	// 流量信息(单位: 字节)
