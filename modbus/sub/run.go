@@ -26,6 +26,7 @@ func Run() {
 	r := chi.NewRouter()
 	r.Group(func(r chi.Router) {
 		r.Get("/", sub)
+		r.Get("/node", subNode)
 	})
 
 	web.Mux.Mount("/api/sub", r)
@@ -35,21 +36,21 @@ func Run() {
 
 func sub(w http.ResponseWriter, r *http.Request) {
 
-// 1. 获取原始 UA
-    rawUA := r.UserAgent()
-    
-    // 2. 转换为小写，确保 Clash, clash, CLASH 都能匹配
-    ua := strings.ToLower(rawUA)
+	// 1. 获取原始 UA
+	rawUA := r.UserAgent()
 
-    // 3. 调试大法：直接在控制台看一眼到底传了什么
-    // fmt.Printf("【调试】当前请求 UA: %s\n", rawUA)
+	// 2. 转换为小写，确保 Clash, clash, CLASH 都能匹配
+	ua := strings.ToLower(rawUA)
 
-    // 4. 核心逻辑：只要包含 "clash" 字符串就放行
-    if !strings.Contains(ua, "clash") {
-        // 如果不包含，返回 404
-        http.NotFound(w, r)
-        return
-    }
+	// 3. 调试大法：直接在控制台看一眼到底传了什么
+	// fmt.Printf("【调试】当前请求 UA: %s\n", rawUA)
+
+	// 4. 核心逻辑：只要包含 "clash" 字符串就放行
+	if !strings.Contains(ua, "clash") {
+		// 如果不包含，返回 404
+		http.NotFound(w, r)
+		return
+	}
 
 	// 获取?token参数
 	token := r.URL.Query().Get("token")
@@ -111,4 +112,31 @@ func sub(w http.ResponseWriter, r *http.Request) {
 	// 发送文件
 	http.ServeFile(w, r, absPath)
 
+}
+
+func subNode(w http.ResponseWriter, r *http.Request) {
+    // 获取?token参数
+    token := r.URL.Query().Get("token")
+
+    // 1. 校验 Token
+    if token != "caj8r79cejyrl3gph4cs5c5ox6cjdph1" {
+        // Token 不对，直接报 403 Forbidden 或 401
+        http.Error(w, "Unauthorized access", http.StatusUnauthorized)
+        return
+    }
+
+	ConfigPath := "data/1szt.yaml"
+
+	absPath, _ := filepath.Abs(ConfigPath)
+
+	info, err := os.Stat(absPath)
+	if err != nil || info.Size() == 0 {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, "错误：配置文件不存在或为空。路径：%s", absPath)
+		return
+	}
+
+    // 4. 返回文件
+    // http.ServeFile 会自动处理 Content-Type 和绝对路径转换
+    http.ServeFile(w, r, absPath)
 }
